@@ -1,0 +1,9 @@
+USE OMARMANI;
+INSERT INTO OMARMANI (id, first_name,last_name,age) VALUES ("1","omar","mani","22");
+SELECT * FROM OMARMANI;
+UPDATE OMARMANI SET first_name = ahmed, last_name = miro WHERE id=1 ;
+DELETE FROM OMARMANI WHERE id=1 ;
+
+
+
+

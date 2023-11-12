@@ -1,0 +1,12 @@
+INSERT INTO users_schema (first_name, last_name, created_at, updated_at) 
+VALUES 
+('John', 'Doe', NOW(), NOW()),
+('Jane', 'Smith', NOW(), NOW()),
+('Alice', 'Johnson', NOW(), NOW());
+SELECT * FROM users_schema;
+SELECT * FROM users_schema WHERE email = 'john@gmail.com'
+SELECT * FROM users_schema WHERE id = (SELECT MAX(id) FROM users_schema);
+UPDATE users_schema SET last_name = 'Pancakes' WHERE id = 3;
+DELETE FROM users_schema WHERE id = 2;
+SELECT * FROM users_schema ORDER BY first_name;
+SELECT * FROM users_schema ORDER BY first_name DESC;
