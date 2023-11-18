@@ -1,0 +1,54 @@
+Customers inside city_id = 312:
+
+
+SELECT first_name, last_name, email, address
+FROM customers
+WHERE city_id = 312;
+Comedy films:
+
+
+SELECT title, description, release_year, rating, special_features, category
+FROM films
+WHERE category = 'Comedy';
+Films joined by actor_id = 5:
+
+
+SELECT a.actor_id, a.actor_name, f.title, f.description, f.release_year
+FROM actors a
+JOIN film_actor fa ON a.actor_id = fa.actor_id
+JOIN films f ON fa.film_id = f.film_id
+WHERE a.actor_id = 5;
+Customers in store_id = 1 and specific cities:
+
+
+SELECT first_name, last_name, email, address
+FROM customers
+WHERE store_id = 1 AND city_id IN (1, 42, 312, 459);
+Films with rating = G and special feature = 'behind the scenes' joined by actor_id = 15:
+
+
+SELECT f.title, f.description, f.release_year, f.rating, f.special_features
+FROM films f
+JOIN film_actor fa ON f.film_id = fa.film_id
+WHERE f.rating = 'G' AND f.special_features LIKE '%behind the scenes%' AND fa.actor_id = 15;
+Actors joined in film_id = 369:
+
+
+SELECT f.film_id, f.title, a.actor_id, a.actor_name
+FROM film_actor fa
+JOIN actors a ON fa.actor_id = a.actor_id
+WHERE fa.film_id = 369;
+Drama films with rental rate of 2.99:
+
+
+SELECT title, description, release_year, rating, special_features, category
+FROM films
+WHERE category = 'Drama' AND rental_rate = 2.99;
+Action films joined by SANDRA KILMER:
+
+
+SELECT f.title, f.description, f.release_year, f.rating, f.special_features, f.category, a.first_name, a.last_name
+FROM films f
+JOIN film_actor fa ON f.film_id = fa.film_id
+JOIN actors a ON fa.actor_id = a.actor_id
+WHERE f.category = 'Action' AND (a.first_name = 'SANDRA' AND a.last_name = 'KILMER');

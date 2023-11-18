@@ -1,0 +1,38 @@
+--1To get all the countries that speak Slovene, arranged by language percentage in descending order:
+SELECT CountryName, Language, Percentage
+FROM CountryLanguage
+WHERE Language = 'Slovene'
+ORDER BY Percentage DESC;
+--2-To display the total number of cities for each country, arranged by the number of cities in descending order:
+SELECT CountryName, COUNT(*) AS TotalCities
+FROM City
+GROUP BY CountryName
+ORDER BY TotalCities DESC;
+--3-To get all the cities in Mexico with a population greater than 500,000, arranged by population in descending order:
+SELECT CityName, Population
+FROM City
+WHERE CountryCode = 'MEX' AND Population > 500000
+ORDER BY Population DESC;
+--4-To get all languages in each country with a percentage greater than 89%, arranged by percentage in descending order:
+SELECT CountryName, Language, Percentage
+FROM CountryLanguage
+WHERE Percentage > 89
+ORDER BY Percentage DESC;
+--5-To get all the countries with Surface Area below 501 and Population greater than 100,000:
+SELECT *
+FROM Country
+WHERE SurfaceArea < 501 AND Population > 100000;
+--6-To get countries with only Constitutional Monarchy, a capital greater than 200, and a life expectancy greater than 75 years:
+SELECT *
+FROM Country
+WHERE GovernmentForm = 'Constitutional Monarchy' AND Capital > 200 AND LifeExpectancy > 75;
+--7-To get all the cities of Argentina inside the Buenos Aires district with a population greater than 500,000:
+SELECT c.CountryName, ci.CityName, ci.District, ci.Population
+FROM City ci
+JOIN Country c ON ci.CountryCode = c.CountryCode
+WHERE c.CountryName = 'Argentina' AND ci.District = 'Buenos Aires' AND ci.Population > 500000;
+--8-To summarize the number of countries in each region, arranged by the number of countries in descending order:
+SELECT Region, COUNT(*) AS NumberOfCountries
+FROM Country
+GROUP BY Region
+ORDER BY NumberOfCountries DESC;

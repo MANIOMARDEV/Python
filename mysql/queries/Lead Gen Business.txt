@@ -1,0 +1,69 @@
+
+To get the total revenue for March 2012:
+
+SELECT SUM(revenue) AS total_revenue
+FROM your_table_name
+WHERE YEAR(date_column) = 2012 AND MONTH(date_column) = 3;
+To get the total revenue collected from the client with an id of 2:
+
+SELECT SUM(revenue) AS total_revenue
+FROM your_table_name
+WHERE client_id = 2;
+To get all the sites that client with an id of 10 owns:
+
+SELECT site_name
+FROM your_table_name
+WHERE client_id = 10;
+To get the total number of sites created per month per year for the client with an id of 1 (similar query for client with an id of 20):
+
+SELECT YEAR(date_column) AS year, MONTH(date_column) AS month, COUNT(site_id) AS total_sites
+FROM your_table_name
+WHERE client_id = 1
+GROUP BY year, month;
+To get the total number of leads generated for each of the sites between January 1, 2011, to February 15, 2011:
+
+SELECT site_id, SUM(leads) AS total_leads
+FROM your_table_name
+WHERE date_column BETWEEN '2011-01-01' AND '2011-02-15'
+GROUP BY site_id;
+To get a list of client names and the total number of leads generated for each client between January 1, 2011, to December 31, 2011:
+
+SELECT client_name, SUM(leads) AS total_leads
+FROM your_table_name
+WHERE date_column BETWEEN '2011-01-01' AND '2011-12-31'
+GROUP BY client_name;
+To get a list of client names and the total number of leads generated for each client each month between months 1 - 6 of Year 2011:
+
+SELECT client_name, YEAR(date_column) AS year, MONTH(date_column) AS month, SUM(leads) AS total_leads
+FROM your_table_name
+WHERE YEAR(date_column) = 2011 AND MONTH(date_column) BETWEEN 1 AND 6
+GROUP BY client_name, year, month;
+To get a list of client names and the total number of leads generated for each of our clients' sites between January 1, 2011, to December 31, 2011, ordered by client id:
+
+SELECT client_id, client_name, site_name, SUM(leads) AS total_leads
+FROM your_table_name
+WHERE date_column BETWEEN '2011-01-01' AND '2011-12-31'
+GROUP BY client_id, client_name, site_name
+ORDER BY client_id;
+To retrieve total revenue collected from each client for each month of the year, ordered by client id, first with integer month:
+
+SELECT client_id, YEAR(date_column) AS year, MONTH(date_column) AS month, SUM(revenue) AS total_revenue
+FROM your_table_name
+GROUP BY client_id, year, month
+ORDER BY client_id, year, month;
+To retrieve the total revenue with month names, you can use a subquery:
+
+
+SELECT client_id, year, month_name, SUM(revenue) AS total_revenue
+FROM (
+    SELECT client_id, YEAR(date_column) AS year, MONTH(date_column) AS month, 
+           DATE_FORMAT(date_column, '%b') AS month_name, SUM(revenue) AS revenue
+    FROM your_table_name
+    GROUP BY client_id, year, month
+) AS subquery
+ORDER BY client_id, year, month;
+To retrieve all the sites that each client owns using GROUP_CONCAT:
+
+SELECT client_id, GROUP_CONCAT(site_name) AS sites
+FROM your_table_name
+GROUP BY client_id;
