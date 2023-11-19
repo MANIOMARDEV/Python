@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninja Gold Game</title>
+</head>
+<body>
+    <h1>Your Gold: {{ gold }}</h1>
+    
+    <form action="/process_money" method="post">
+        <input type="hidden" name="building" value="farm" />
+        <input type="submit" value="Find Gold!"/>
+    </form>
+
+    <form action="/process_money" method="post">
+        <input type="hidden" name="building" value="cave" />
+        <input type="submit" value="Enter Cave"/>
+    </form>
+
+    <form action="/process_money" method="post">
+        <input type="hidden" name="building" value="house" />
+        <input type="submit" value="Enter House"/>
+    </form>
+
+    <form action="/process_money" method="post">
+        <input type="hidden" name="building" value="casino" />
+        <input type="submit" value="Go to Casino"/>
+    </form>
+
+    <h2>Activities</h2>
+    <ul>
+        {% for activity in activities %}
+            <li style="color: {{ activity.color }}">{{ activity.message }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
