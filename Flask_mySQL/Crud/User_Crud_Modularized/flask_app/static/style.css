@@ -8,7 +8,7 @@ body{
 }
 
 .background_image{
-    background-image: url('images/background.png');
+    background-image: url('images/background.png.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
