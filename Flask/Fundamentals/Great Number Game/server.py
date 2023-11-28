@@ -1,42 +1,47 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session
+
 import random
 
 app = Flask(__name__)
-app.secret_key = 'secret_key'
+app.secret_key = "greatnumgame"
 
-def generate_new_number():
-    return random.randint(1, 100)
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if 'number' not in session:
-        session['number'] = generate_new_number()
-        session['attempts'] = 0
-        session['message'] = ''
+@app.route("/")
+def num_game():
+    guess_number = random.randrange(0, 101)
+    if "guess" not in session:
+        session["guess"] = guess_number
+    return render_template("number_game.html")
 
-    if request.method == 'POST':
-        guess = int(request.form['guess'])
-        session['attempts'] += 1
 
-        if guess == session['number']:
-            message = f'Congratulations! You guessed the correct number in {session["attempts"]} attempts.'
-            session.pop('number')
-            session.pop('attempts')
-            session['message'] = message
-            return redirect(url_for('index'))
+@app.route("/check", methods=["POST"])
+def check_input_value():
+    try:
+        input_value = int(request.form["input_guess"])
+    except ValueError:
+        box_color = "yellow"  # You can choose a color for invalid input
+        box_text = "Please enter a valid number!"
+        return render_template("number_game.html", box_color=box_color, box_text=box_text)
 
-        elif guess < session['number']:
-            session['message'] = 'Too low! Try again.'
+    random_guess = session["guess"]
+    box_color = ""
+    box_text = ""
+    reset_button = ""
 
-        else:
-            session['message'] = 'Too high! Try again.'
+    if input_value == random_guess:
+        box_color = "green"
+        box_text = "You've Guessed the number!"
+        reset_button = '<a href="/"><button type="submit" class="btn btn-primary subbut" value="Submit">Try Again</button></a>'
+        session.clear()
+    elif input_value > random_guess:
+        box_color = "red"
+        box_text = "Your guess is too high! Try again!"
+    elif input_value < random_guess:
+        box_color = "blue"
+        box_text = "Your guess is too low! Try again!"
 
-    return render_template('index.html', message=session['message'])
+    return render_template("number_game.html", box_color=box_color, box_text=box_text, reset_button=reset_button)
 
-@app.route('/leaderboard')
-def leaderboard():
-    # You can implement a leaderboard here, storing winners' names and attempts in a database
-    return render_template('leaderboard.html')
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)

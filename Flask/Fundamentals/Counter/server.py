@@ -1,29 +1,37 @@
-from flask import Flask, render_template, session, redirect, url_for, request
-
+from flask import Flask, render_template, request, redirect, session
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Change this to a secure secret key
+app.secret_key = "counterman"
 
 @app.route('/')
 def index():
-    if 'counter' not in session:
-        session['counter'] = 0
-    else:
-        session['counter'] += 1
+    if "count" not in session:
+        session["count"] = 1
+    else:    
+        session["count"] += 1
+    
+    return render_template("counter.html")    
 
-    return render_template('index.html', counter=session['counter'])
+@app.route("/count", methods=["POST"])
+def view_count():
+    if request.form["alter"]=="add":
+        session["count"] += 1
+    elif request.form["alter"]=="reset":
+        session["count"] = 0
 
-@app.route('/destroy_session')
-def destroy_session():
+    return redirect("/")
+
+@app.route("/destroy")
+def destroy():
     session.clear()
-    return redirect(url_for('index'))
+    return redirect("/")
+    
+    
 
-@app.route('/increment', methods=['POST'])
-def increment():
-    if 'counter' not in session:
-        session['counter'] = 0
-    increment_value = int(request.form.get('increment_value', 1))
-    session['counter'] += increment_value
-    return redirect(url_for('index'))
+    
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+    
+   
+if __name__=="__main__":
+    
+    app.run(debug=True) 

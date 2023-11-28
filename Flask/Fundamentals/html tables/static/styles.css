@@ -1,0 +1,18 @@
+.table {
+  border: 1px solid #ddd; /* Use your preferred color */
+  border-collapse: collapse;
+}
+
+/* Style for table header */
+.table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Style for table cells */
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}

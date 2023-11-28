@@ -1,0 +1,61 @@
+html,body {
+    height: 100%;
+    
+}
+
+body{
+    background-color: black !important;
+}
+
+.background_image{
+    background-image: url('images/background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: blur(8px);
+    height: 100%;
+    width: 100%;
+    opacity: 0.7;
+    position: absolute;
+}
+
+.container{
+    color: white;
+    border: 2px solid white;
+    border-radius: 7px;
+    width: 500px !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    
+    z-index: 2;
+}
+
+label{
+    opacity: 1;
+}
+
+input{
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+button.btn-success{
+    background-color: rgba(25,135,84,0.5) !important;
+    border: 1px solid rgb(25,135,84) !important;
+}
+
+.btn-primary{
+    background-color: rgba(13,110,253,0.5)!important;
+    border: 1px solid rgb(13,110,253)!important;
+}
+
+.btn-danger{
+    background-color: rgba(220,53,69,0.5)!important;
+}
+
+.btn-warning{
+    background-color: rgba(255,193,7,0.5)!important;
+}
+
+tbody{
+    overflow: scroll;
+}
+

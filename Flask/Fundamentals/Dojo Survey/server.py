@@ -1,37 +1,42 @@
-from flask import Flask, render_template, request, redirect, session, url_for
-
+from flask import Flask, render_template, request, redirect, flash
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = "doesitevenneedone"
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template("survey.html")
 
-@app.route('/process', methods=['POST'])
-def process():
-    # Retrieve form data
-    name = request.form['name']
-    email = request.form['email']
-    radio_option = request.form['radio_option']
-    checkbox_options = request.form.getlist('checkbox_options')
-
-    # Save form data to session
-    session['name'] = name
-    session['email'] = email
-    session['radio_option'] = radio_option
-    session['checkbox_options'] = checkbox_options
-
-    return redirect(url_for('result'))
-
-@app.route('/result')
+@app.route("/result", methods=["POST"])
 def result():
-    # Retrieve form data from session
-    name = session.get('name', '')
-    email = session.get('email', '')
-    radio_option = session.get('radio_option', '')
-    checkbox_options = session.get('checkbox_options', [])
+    if len(request.form["name"])<1:
+        flash("Name field can not be empty")
+        return redirect("/")
+    if len(request.form["comments"])<1:
+        flash("Comment Field can not be empty")
+        return redirect("/")
+    if len(request.form["comments"])>120:
+        flash("comment needs to be less than 120 characters")
+        return redirect("/")
+    else:
+        name = request.form["name"]
+        dojo_location = request.form["dojo_location"]
+        favlanguage = request.form["favlanguage"]
+        comments = request.form["comments"]
+        return render_template("result.html", name = name, dojo_location = dojo_location, favlanguage = favlanguage, comments = comments)
 
-    return render_template('result.html', name=name, email=email, radio_option=radio_option, checkbox_options=checkbox_options)
+    
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+@app.route("/danger")
+def danger_back():
+    print("a user tried to visit '/danger'.  we have redirected the user to '/'")
+    return redirect("/")
+
+    
+
+
+    
+   
+if __name__=="__main__":
+    
+    app.run(debug=True) 
